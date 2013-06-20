@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width" />
+    <title>Node.js Backbone REST Example</title>
+    <link rel="stylesheet" href="css/style.css" />
+    <script src="js/libs/jquery.js"></script>
+    <script src="js/libs/lodash.js"></script>
+    <script src="js/libs/backbone.js"></script>
+    <script src="https://google-code-prettify.googlecode.com/svn/loader/run_prettify.js?autoload=true" defer="defer"></script>
+</head>
+<body>
+<ol class="rectangle-list">
+    <li>
+        <div class="instructions current">
+            Start by creating a backbone collection
+        </div>
+        <pre class="prettyprint">
+        window.players = new Backbone.Collection();
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Set the URL
+        </div>
+            <pre class="prettyprint">
+        players.url = 'http://localhost:3000/players';
+    </pre>
+    </li>
+    <li>
+        <div class="instructions">
+            Executes a HTTP GET to get players from the server
+        </div>
+        <pre class="prettyprint">
+        players.fetch();
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Create a new player </div>
+        <pre class="prettyprint">
+        window.player = new Backbone.Model();
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Set the name
+        </div>
+        <pre class="prettyprint">
+        player.set({'Name': 'bar'});
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Execute a HTTP POST by adding the player to the collection
+        </div>
+        <pre class="prettyprint">
+        players.create(player);
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Update the players' name
+        </div>
+        <pre class="prettyprint">
+        player.set({'Name': 'foo'});
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Execute a HTTP PUT by saving the player
+        </div>
+        <pre class="prettyprint">
+        player.save();
+    </pre>
+
+    </li>
+    <li>
+        <div class="instructions">
+            Execute a HTTP DELETE by destroying the player </div>
+        <pre class="prettyprint">
+        player.destroy();
+    </pre>
+
+    </li>
+</ol>
+
+<script type="text/javascript">
+    $(document).ready(function () {
+
+        var nextStepHtml = '<a href="#" class="nextstep">Go</a>';
+        $('.current').append(nextStepHtml);
+
+        $('ol').on('click', '.current .nextstep', function (e) {
+            eval($(this).closest('li').find('.prettyprint').text());
+            $(this).parent().removeClass('current');
+            var $nextStep = $(this).closest('li').next().find('.instructions');
+            if ($nextStep.length > 0) {
+                $('body').animate({ scrollTop: $nextStep.offset().top }, 1000, function() {
+                    $nextStep.addClass('current');
+                    $nextStep.append(nextStepHtml);
+                });
+            } else {
+                $('ol').unbind('click');
+                $(this).parent().find('.nextstep').text('All Done!');
+            }
+            e.preventDefault();
+        });
+
+    });
+</script>
+
+</body>
+</html>
